@@ -1,0 +1,255 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">  
+    <modelVersion>4.0.0</modelVersion>  
+    <groupId>com.home.demo</groupId>  
+    <artifactId>flowable-springboot</artifactId>  
+    <version>0.0.1</version>  
+    <packaging>war</packaging>  
+  
+    <properties>  
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <flowable.version>6.2.0</flowable.version>
+    </properties>  
+  
+    <!-- Inherit defaults from Spring Boot -->  
+    <parent>  
+        <groupId>org.springframework.boot</groupId>  
+        <artifactId>spring-boot-starter-parent</artifactId>  
+        <version>1.4.0.RELEASE</version>  
+    </parent>  
+    <dependencies>
+    	<!--通过spring-boot-starter-data-rest来对外提供REST API，可以免于编写对应的Controller，且具备分页和排序的功能。 --> 
+	    		<dependency>
+			   <groupId>org.springframework.boot</groupId>      
+			   <artifactId>spring-boot-starter-data-rest</artifactId>
+			</dependency>
+   		<!--flowable集成springboot --> 
+   	 	<dependency>
+		   	<groupId>org.flowable</groupId>
+		   	<artifactId>flowable-spring-boot-starter-basic</artifactId>
+		   	<version>${flowable.version}</version>
+	   	</dependency>
+	   	<dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-spring-boot-starter-security</artifactId>
+            <version>${flowable.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+	   	<!-- 
+	   <dependency>
+		  <groupId>org.slf4j</groupId>
+		  <artifactId>slf4j-api</artifactId>
+		  <version>1.7.21</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>org.slf4j</groupId>
+		  <artifactId>slf4j-log4j12</artifactId>
+		  <version>1.7.21</version>
+		</dependency>
+	   	 -->
+	   	<!-- Swagger支持 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+        
+        <!-- 用于创建内存数据库（H2驱动，传递给Flowable流程引擎配置） -->
+        
+	    <dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.183</version>
+		</dependency>
+		
+        
+        <!-- web支持: 1、web mvc; 2、restful; 3、jackjson支持; 4、aop ........ --> 
+        <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+        <!-- --> 
+        <dependency>  
+            <groupId>org.springframework.boot</groupId>  
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+	        	<exclusion>
+	           		<groupId>org.springframework.boot</groupId>
+	            		<artifactId>spring-boot-starter-tomcat</artifactId>
+	        	</exclusion>
+	    	</exclusions>
+        </dependency>  
+       
+        
+       <!-- Springboot 热部署 -->  
+	   <dependency>  
+	       <groupId>org.springframework.boot</groupId>  
+	       <artifactId>spring-boot-devtools</artifactId>  
+	       <optional>true</optional>  
+	   </dependency>  
+	   
+        <!-- servlet 依赖. -->  
+        <dependency>  
+            <groupId>javax.servlet</groupId>  
+            <artifactId>javax.servlet-api</artifactId>  
+            <scope>provided</scope>  
+        </dependency>  
+        <dependency>
+		    <groupId>org.apache.tomcat</groupId>
+		    <artifactId>tomcat-servlet-api</artifactId>
+		    <version>8.0.36</version>
+		    <scope>provided</scope>
+		</dependency>
+ 
+        <!-- tomcat 的支持.  --> 
+        <dependency>  
+            <groupId>org.springframework.boot</groupId>  
+            <artifactId>spring-boot-starter-tomcat</artifactId>  
+            <scope>provided</scope>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.apache.tomcat.embed</groupId>  
+            <artifactId>tomcat-embed-jasper</artifactId>  
+            <scope>provided</scope>  
+        </dependency>
+        
+        <dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		 
+		<dependency>
+	       <groupId>org.springframework.boot</groupId>
+	       <artifactId>spring-boot-starter-data-jpa</artifactId>
+	    </dependency>
+	     <!--
+	    <dependency>
+		    <groupId>org.flowable</groupId>
+		    <artifactId>flowable-spring-boot-starter-jpa</artifactId>
+		    <version>${flowable.version}</version>
+		</dependency>
+		--> 
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.tomcat</groupId>
+		    <artifactId>tomcat-jdbc</artifactId>
+		</dependency>
+	    
+	    <!-- 阿里巴巴数据源包 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <!-- 阿里巴巴json包 -->
+       	<dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.1.40</version>
+        </dependency>
+         <!--
+	        <dependency> 
+	            <groupId>org.springframework</groupId>  
+	            <artifactId>spring-test</artifactId>  
+	            <version>4.2.4.RELEASE</version>  
+	       </dependency>
+	      -->
+		   <dependency>
+			   <groupId>junit</groupId>
+			   <artifactId>junit</artifactId>
+			   <version>4.11</version>
+			   <scope>test</scope>
+		   </dependency>
+		   
+		   <dependency>
+			    <groupId>org.codehaus.woodstox</groupId>
+			    <artifactId>woodstox-core-asl</artifactId>
+			    <version>4.4.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>1.16.18</version>
+				<scope>provided</scope>
+			</dependency>
+		
+    </dependencies>  
+    
+    <build>  
+       <finalName>flowable-springboot</finalName>  
+       <plugins>  
+			<plugin>  
+	            <groupId>org.apache.maven.plugins</groupId>  
+	            <artifactId>maven-compiler-plugin</artifactId>  
+	            <version>2.3.2</version>
+	            <configuration>  
+	                <source>1.8</source>  
+	                <target>1.8</target>  
+	            </configuration>  
+	        </plugin>  
+	        <!-- 生成源码包所需插件 -->
+	          <plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-source-plugin</artifactId>
+			    <version>2.1.2</version>
+			    <executions>
+			      <execution>
+			        <id>attach-sources</id>
+			        <!--  要绑定到的生命周期的阶段 在verify之后，install之前执行下面指定的goal -->  
+			        <phase>verify</phase>
+			        <goals>
+			        <!-- 类似执行mvn source:jar -->
+			          <goal>jar-no-fork</goal>
+			        </goals>
+			      </execution>
+			    </executions>
+			  </plugin>
+			  <!-- 生成Javadoc包所需插件 -->
+			    <plugin>          
+				    <groupId>org.apache.maven.plugins</groupId>
+				    <artifactId>maven-javadoc-plugin</artifactId>
+				    <version>2.7</version>
+				    <executions>
+				      <execution>
+				        <id>attach-javadocs</id>
+				          <goals>
+				            <goal>jar</goal>
+				          </goals>
+				      </execution>
+				    </executions>
+				  </plugin>  
+			
+        
+       </plugins>  
+    </build>  
+    
+     <!--定义snapshots库和releases库的nexus地址--> 
+	<distributionManagement>
+        <repository>
+        		 <!--此处的id与settings.xml中<server> <id>develop</id> </server>的 id匹配 -->
+            <id>develop</id>
+            <name>Releases</name>
+            <url>http://nexus.pinbot.me/repository/syuntax-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>develop</id>
+            <name>Snapshot</name>
+            <url>http://nexus.pinbot.me/repository/syuntax-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>  

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.home.demo.dao.PermissionDao">
+
+	<select id="findAll"  resultType="com.home.demo.bean.Permission">
+	   SELECT * from sec_id_permission
+	</select>
+	
+	 <select id="findByAdminUserId" parameterType="string" resultType="com.home.demo.bean.Permission">
+	      select per.*
+		        from act_id_user user
+		        LEFT JOIN act_id_membership user_group
+		        		 on user.id_ = user_group.user_id_
+		        LEFT JOIN act_id_group gro 
+		        		 on user_group.group_id_ = gro.id_
+		        LEFT JOIN sec_group_permission group_per
+		        		 on gro.id_ = group_per.group_id
+		        LEFT JOIN sec_id_permission per 
+		        		 on group_per.permission_id = per.id
+		        where user.id_ = #{userId}
+	 </select>
+ </mapper>

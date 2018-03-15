@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.home.demo.dao.UserDao">
+    <resultMap id="userMap" type="com.home.demo.bean.User">
+        <id property="id" column="ID_"/>
+        <result property="username" column="FIRST_"/>
+        <result property="password" column="PWD_"/>
+        <collection property="roles" ofType="com.home.demo.bean.Role">
+            <result column="name_" property="name"/>
+        </collection>
+
+    </resultMap>
+    <select id="findByUserName" parameterType="String" resultMap="userMap">
+        select u.*,r.name_
+        from act_id_user u
+        LEFT JOIN act_id_membership sur 
+        		 on u.id_ = sur.user_id_
+        LEFT JOIN act_id_group r 
+        		 on sur.group_id_ = r.id_
+        where first_ = #{username}
+    </select>
+    <select id="findAll" parameterType="String" resultMap="userMap">
+    		select u.*,r.name_
+        from act_id_user u
+        LEFT JOIN act_id_membership sur 
+        		 on u.id_ = sur.user_id_
+        LEFT JOIN act_id_group r 
+        		 on sur.group_id_ = r.id_
+    </select>
+    <select id="findById" parameterType="int" resultMap="userMap">
+    		select u.*,r.name_
+        from act_id_user u
+        LEFT JOIN act_id_membership sur 
+        		 on u.id_ = sur.user_id_
+        LEFT JOIN act_id_group r 
+        		 on sur.group_id_ = r.id_
+        where u.id_ = #{id}
+    </select>
+    <insert id="save" parameterType="com.home.demo.bean.User">
+        insert into act_id_user(id_,first_,pwd_) values(#{id},#{username},#{password})
+    </insert>
+    <update id="modify" parameterType="com.home.demo.bean.User">
+        update act_id_user set first_ = #{username},pwd_ = #{password} where id_ = #{id}
+    </update>
+    <delete id="deleteById" parameterType="string">
+        delete from act_id_user where id_ = #{id}
+    </delete>
+    
+</mapper>
